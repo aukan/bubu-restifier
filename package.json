@@ -1,7 +1,7 @@
 {
   "name": "bubu-restifier",
   "version": "1.0.0",
-  "description": "Javascript RESTful styled API client. Follows modularity.",
+  "description": "RESTful styled API client augmenter. Follows modularity. Works with browserify.",
   "main": "bubu-restifier.js",
   "scripts": {
     "test": "NODE_ENV=test mocha"
@@ -16,6 +16,8 @@
     "api",
     "client",
     "request",
+    "http",
+    "browser",
     "modular",
     "modularity"
   ],

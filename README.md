@@ -60,6 +60,4 @@ animalsApi.put(3, {name: 'cow'}, function (res) {
 
 ## Notes
 
-* I'm introducing some terms in this module which I intend to clarify later in a more proper documentation. If you have any questions please feel free to write to me.
-* This module is not intended to implement a strict RESTful API (link missing).
-
+* This module is not intended to implement a strict RESTful API (http://www.restdoc.org/spec.html), its just inspired on it.

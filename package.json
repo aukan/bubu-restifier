@@ -38,6 +38,6 @@
     ]
   },
   "scripts": {
-    "test": "mocha --ui tdd"
+    "test": "mocha --ui bdd"
   }
 }

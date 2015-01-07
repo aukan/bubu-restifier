@@ -13,7 +13,7 @@ To install:
 npm install bubu-restifier
 ```
 
-Initialization:
+### Initialization
 
 ```js
 var http = require('http');
@@ -27,9 +27,18 @@ animalsApi = apiClient.create({
 });
 ```
 
-Usage examples:
+### Usage examples
 
 ```
+// POST /animals
+animalsApi.post({name: 'dog'}, function (res) {
+    var body = '';
+    res.on('data', function (chunk) { body += chunk; });
+    res.on('end', function () {
+        var animal = JSON.parse(body);
+    });
+});
+
 // GET /animals
 animalsApi.get(function (res) {
     var body = '';
@@ -57,6 +66,24 @@ animalsApi.put(3, {name: 'cow'}, function (res) {
     });
 });
 ```
+
+## API
+
+* restifier.get([query], [options], callback)
+* restifier.post([data], [options], callback)
+* restifier.update([query], [data], [options], callback)
+* restifier.delete([query], [options], callback)
+
+options:
+
+This parameter overwrites the predefined options in case something more custom is needed.
+
+* host
+* port
+* path
+* method
+* headers
+* query
 
 ## Notes
 

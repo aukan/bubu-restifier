@@ -1,6 +1,7 @@
 var assert = require('assert');
 var restifier = require('../bubu-restifier');
 var apiClient = restifier.augment({}); // Augment empty object since we are not going to use a real request
+var querystring = require('querystring');
 
 describe('bubu-restifier', function () {
     var animalsApi, server;
@@ -38,10 +39,25 @@ describe('bubu-restifier', function () {
             });
         });
 
-        it('should request a single resource', function (done) {
-            animalsApi.get(3, function (opts) {
-                assert.equal('GET', opts.method);
-                assert.equal('/animals/3', opts.path);
+        it('should accept and overwrite the options', function (done) {
+            animalsApi.post({name: 'dog'}, {
+                host : '127.0.0.1',
+                port : 3000,
+                path : '/test',
+                method : 'OTHER',
+                headers : {
+                    'Custom-Header': 'test'
+                },
+                query : {
+                    legs : 4
+                }
+            }, function (opts) {
+                assert.equal('127.0.0.1', opts.host);
+                assert.equal(3000, opts.port);
+                assert.equal('OTHER', opts.method);
+                assert.equal('/test', opts.path.replace(/\?.*/, ''));
+                assert.equal(4, querystring.parse(opts.path.replace(/.*\?/, '')).legs);
+                assert.equal('dog', opts.data.name);
                 assert.equal('application/json', opts.headers['Content-Type']);
                 done();
             });
@@ -66,6 +82,29 @@ describe('bubu-restifier', function () {
                 done();
             });
         });
+
+        it('should accept and overwrite the options', function (done) {
+            animalsApi.get(3, {
+                    host : '127.0.0.1',
+                    port : 3000,
+                    path : '/test',
+                    method : 'OTHER',
+                    headers : {
+                        'Custom-Header': 'test'
+                    },
+                    query : {
+                        legs : 4
+                    }
+                }, function (opts) {
+                assert.equal('127.0.0.1', opts.host);
+                assert.equal(3000, opts.port);
+                assert.equal('OTHER', opts.method);
+                assert.equal('/test', opts.path.replace(/\?.*/, ''));
+                assert.equal(4, querystring.parse(opts.path.replace(/.*\?/, '')).legs);
+                assert.equal('application/json', opts.headers['Content-Type']);
+                done();
+            });
+        });
     });
 
     describe('put', function () {
@@ -78,16 +117,63 @@ describe('bubu-restifier', function () {
                 done();
             });
         });
+
+        it('should accept and overwrite the options', function (done) {
+            animalsApi.put(1, {name : 'vaca'}, {
+                    host : '127.0.0.1',
+                    port : 3000,
+                    path : '/test',
+                    method : 'OTHER',
+                    headers : {
+                        'Custom-Header': 'test'
+                    },
+                    query : {
+                        legs : 4
+                    }
+                }, function (opts) {
+                assert.equal('127.0.0.1', opts.host);
+                assert.equal(3000, opts.port);
+                assert.equal('OTHER', opts.method);
+                assert.equal('/test', opts.path.replace(/\?.*/, ''));
+                assert.equal(4, querystring.parse(opts.path.replace(/.*\?/, '')).legs);
+                assert.equal('application/json', opts.headers['Content-Type']);
+                done();
+            });
+        });
     });
 
     describe('delete', function () {
         it('should request a deletion to a single resource', function (done) {
             animalsApi.delete(2, function (opts) {
                 assert.equal('DELETE', opts.method);
-                assert.equal('/animals/2', opts.path);
+                assert.equal(opts.path, '/animals/2');
+                assert.equal('application/json', opts.headers['Content-Type']);
+                done();
+            });
+        });
+
+        it('should accept and overwrite the options', function (done) {
+            animalsApi.delete(2, {
+                    host : '127.0.0.1',
+                    port : 3000,
+                    path : '/test',
+                    method : 'OTHER',
+                    headers : {
+                        'Custom-Header': 'test'
+                    },
+                    query : {
+                        legs : 4
+                    }
+                }, function (opts) {
+                assert.equal('127.0.0.1', opts.host);
+                assert.equal(3000, opts.port);
+                assert.equal('OTHER', opts.method);
+                assert.equal('/test', opts.path.replace(/\?.*/, ''));
+                assert.equal(4, querystring.parse(opts.path.replace(/.*\?/, '')).legs);
                 assert.equal('application/json', opts.headers['Content-Type']);
                 done();
             });
         });
     });
+
 });

@@ -88,7 +88,7 @@ describe('bubu-restifier', function () {
         });
 
         it('should accept and overwrite the options', function (done) {
-            animalsApi.get(3, {
+            animalsApi.get('3', {
                     host : '127.0.0.1',
                     port : 3000,
                     path : '/test',
@@ -107,6 +107,21 @@ describe('bubu-restifier', function () {
                 assert.equal(4, querystring.parse(opts.path.replace(/.*\?/, '')).legs);
                 assert.equal('application/json', opts.headers['Content-Type']);
                 assert.equal(opts.headers['Custom-Header'], 'test');
+                done();
+            });
+        });
+
+        it('should not modify arrays when passed as headers or in a query', function (done) {
+            animalsApi.get('3', {
+                    headers : {
+                        'Custom-Header': ['something']
+                    },
+                    query : {
+                        something: ['something']
+                    }
+                }, function (opts) {
+                assert.equal(opts.headers['Custom-Header'].length, 1);
+                assert.equal(opts.headers['Custom-Header'][0], 'something');
                 done();
             });
         });

@@ -4,7 +4,7 @@ var querystring = require('querystring');
 // Augments a requester object to implement a RESTful styled API
 function augment (requester) {
     // A recursive merge of objects
-    function merge () {
+    function merge (nonRecursive) {
         var newObj = {}, obj;
 
         for (var i = 0; i < arguments.length; i+=1) {
@@ -12,7 +12,7 @@ function augment (requester) {
 
             for (var key in obj) {
                 if (obj.hasOwnProperty(key)) {
-                    if (typeof(obj[key]) === 'object') {
+                    if (obj[key].toString() === '[object Object]') {
                         newObj[key] = merge(newObj[key], obj[key]);
                     } else {
                         newObj[key] = obj[key];
@@ -97,15 +97,14 @@ function augment (requester) {
             apiClient.port = 80;
             apiClient.path = '/';
             apiClient.query = {};
+            apiClient.headers = apiClient.headers || {};
+            apiClient.headers['Content-Type'] = 'application/json';
 
             for (var key in config) {
                 if (config.hasOwnProperty(key)) {
                     apiClient[key] = config[key];
                 }
             }
-
-            apiClient.headers = apiClient.headers || {};
-            apiClient.headers['Content-Type'] = 'application/json';
 
             return apiClient;
         };

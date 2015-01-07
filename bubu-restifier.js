@@ -95,17 +95,17 @@ function augment (requester) {
         requester.create = function create (config) {
             var apiClient = Object.create(this);
 
-            for (var key in config) {
-                if (config.hasOwnProperty(key)) {
-                    apiClient[key] = config[key];
-                }
-            }
-
             // Set defaults
             apiClient.host = 'localhost';
             apiClient.port = 80;
             apiClient.path = '/';
             apiClient.query = {};
+
+            for (var key in config) {
+                if (config.hasOwnProperty(key)) {
+                    apiClient[key] = config[key];
+                }
+            }
 
             apiClient.headers = apiClient.headers || {};
             apiClient.headers['Content-Type'] = 'application/json';

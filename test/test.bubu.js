@@ -35,6 +35,7 @@ describe('bubu-restifier', function () {
                 assert.equal('/animals', opts.path);
                 assert.equal('dog', opts.data.name);
                 assert.equal('application/json', opts.headers['Content-Type']);
+                assert.equal(8000, opts.port);
                 done();
             });
         });
@@ -70,6 +71,7 @@ describe('bubu-restifier', function () {
                 assert.equal('GET', opts.method);
                 assert.equal('/animals', opts.path);
                 assert.equal('application/json', opts.headers['Content-Type']);
+                assert.equal(8000, opts.port);
                 done();
             });
         });
@@ -79,6 +81,7 @@ describe('bubu-restifier', function () {
                 assert.equal('GET', opts.method);
                 assert.equal('/animals/3', opts.path);
                 assert.equal('application/json', opts.headers['Content-Type']);
+                assert.equal(8000, opts.port);
                 done();
             });
         });
@@ -114,6 +117,7 @@ describe('bubu-restifier', function () {
                 assert.equal('/animals/1', opts.path);
                 assert.equal('vaca', opts.data.name);
                 assert.equal('application/json', opts.headers['Content-Type']);
+                assert.equal(8000, opts.port);
                 done();
             });
         });
@@ -148,6 +152,7 @@ describe('bubu-restifier', function () {
                 assert.equal('DELETE', opts.method);
                 assert.equal(opts.path, '/animals/2');
                 assert.equal('application/json', opts.headers['Content-Type']);
+                assert.equal(8000, opts.port);
                 done();
             });
         });

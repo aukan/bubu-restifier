@@ -62,6 +62,12 @@ function augment (requester) {
         };
     }
 
+    requester.post = function post () {
+        Array.prototype.unshift.call(arguments, null);
+        Array.prototype.unshift.call(arguments, 'POST');
+        requestVerb.apply(this, arguments);
+    };
+
     requester.get = function get () {
         Array.prototype.unshift.call(arguments, 'GET');
         requestVerb.apply(this, arguments);
@@ -72,7 +78,7 @@ function augment (requester) {
         requestVerb.apply(this, arguments);
     };
 
-    requester.remove = function get (query, data, options, done) {
+    requester.delete = function get (query, data, options, done) {
         Array.prototype.unshift.call(arguments, 'DELETE');
         requestVerb.apply(this, arguments);
     };

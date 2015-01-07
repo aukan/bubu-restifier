@@ -27,6 +27,27 @@ describe('bubu-restifier', function () {
         done();
     });
 
+    describe('post', function () {
+        it('should request the creation of a resource', function (done) {
+            animalsApi.post({name: 'dog'}, function (opts) {
+                assert.equal('POST', opts.method);
+                assert.equal('/animals', opts.path);
+                assert.equal('dog', opts.data.name);
+                assert.equal('application/json', opts.headers['Content-Type']);
+                done();
+            });
+        });
+
+        it('should request a single resource', function (done) {
+            animalsApi.get(3, function (opts) {
+                assert.equal('GET', opts.method);
+                assert.equal('/animals/3', opts.path);
+                assert.equal('application/json', opts.headers['Content-Type']);
+                done();
+            });
+        });
+    });
+
     describe('get', function () {
         it('should request all resources', function (done) {
             animalsApi.get(function (opts) {
@@ -61,7 +82,7 @@ describe('bubu-restifier', function () {
 
     describe('delete', function () {
         it('should request a deletion to a single resource', function (done) {
-            animalsApi.remove(2, function (opts) {
+            animalsApi.delete(2, function (opts) {
                 assert.equal('DELETE', opts.method);
                 assert.equal('/animals/2', opts.path);
                 assert.equal('application/json', opts.headers['Content-Type']);

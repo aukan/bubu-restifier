@@ -63,14 +63,11 @@ function augment (requester) {
 
         if (typeof(query) === 'string' || typeof(query) === 'number') {
             path = '/' + this.resource + '/' + query;
+            query = {};
         } else {
             path = '/' + this.resource;
-
-            if (query) {
-                query = query;
-            }
+            options.query = merge(query, options.query);
         }
-        options.query = merge(query, options.query);
         options.path = options.path || path;
         options.method = options.method || verb;
 

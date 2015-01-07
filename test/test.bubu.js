@@ -60,6 +60,7 @@ describe('bubu-restifier', function () {
                 assert.equal(4, querystring.parse(opts.path.replace(/.*\?/, '')).legs);
                 assert.equal('dog', opts.data.name);
                 assert.equal('application/json', opts.headers['Content-Type']);
+                assert.equal(opts.headers['Custom-Header'], 'test');
                 done();
             });
         });
@@ -77,7 +78,7 @@ describe('bubu-restifier', function () {
         });
 
         it('should request a single resource', function (done) {
-            animalsApi.get(3, function (opts) {
+            animalsApi.get('3', function (opts) {
                 assert.equal('GET', opts.method);
                 assert.equal('/animals/3', opts.path);
                 assert.equal('application/json', opts.headers['Content-Type']);
@@ -105,6 +106,7 @@ describe('bubu-restifier', function () {
                 assert.equal('/test', opts.path.replace(/\?.*/, ''));
                 assert.equal(4, querystring.parse(opts.path.replace(/.*\?/, '')).legs);
                 assert.equal('application/json', opts.headers['Content-Type']);
+                assert.equal(opts.headers['Custom-Header'], 'test');
                 done();
             });
         });
@@ -141,6 +143,7 @@ describe('bubu-restifier', function () {
                 assert.equal('/test', opts.path.replace(/\?.*/, ''));
                 assert.equal(4, querystring.parse(opts.path.replace(/.*\?/, '')).legs);
                 assert.equal('application/json', opts.headers['Content-Type']);
+                assert.equal(opts.headers['Custom-Header'], 'test');
                 done();
             });
         });
@@ -176,6 +179,7 @@ describe('bubu-restifier', function () {
                 assert.equal('/test', opts.path.replace(/\?.*/, ''));
                 assert.equal(4, querystring.parse(opts.path.replace(/.*\?/, '')).legs);
                 assert.equal('application/json', opts.headers['Content-Type']);
+                assert.equal(opts.headers['Custom-Header'], 'test');
                 done();
             });
         });

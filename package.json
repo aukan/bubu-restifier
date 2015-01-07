@@ -1,6 +1,6 @@
 {
   "name": "bubu-restifier",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "RESTful styled API client augmenter. Follows modularity. Works with browserify.",
   "main": "bubu-restifier.js",
   "repository": {
